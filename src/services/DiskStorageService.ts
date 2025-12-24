@@ -1,5 +1,5 @@
 /*
-    REFERENCE: Ionic (2024) Filesystem Capacitor Plugin API. Available at: https://ionicframework.com/docs/native/filesystem
+    REFERENCE: Ionic (2025) Filesystem Capacitor Plugin API. Available at: https://ionicframework.com/docs/native/filesystem
 */
 
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';

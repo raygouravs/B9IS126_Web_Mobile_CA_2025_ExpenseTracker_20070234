@@ -12,11 +12,13 @@ import { DiskStorageService } from '../services/DiskStorageService';
 export default function EntryListView(props: { entries: Entry[], setEntries: any }) {
 
   const handleDelete = async (id: string) => {
-    //update UI
+    //perform deletion
     let up_entries = props.entries.filter(e => e.id != id);
-    props.setEntries(up_entries);
     //update disk records
     const result = await DiskStorageService.saveEntries(up_entries);
+    //update UI
+    props.setEntries(up_entries);
+
   };
 
   return (

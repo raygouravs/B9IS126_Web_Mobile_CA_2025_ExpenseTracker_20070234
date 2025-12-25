@@ -1,2 +1,54 @@
 /* For information on how to create your own theme, please refer to:
 http://ionicframework.com/docs/theming/ */
+
+:root {
+  /** Primary Color - You can change these to match your brand **/
+  --ion-color-primary: #3880ff;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3171e0;
+  --ion-color-primary-tint: #4c8dff;
+
+  /** Standard Ionic Backgrounds **/
+  --ion-background-color: #ffffff;
+  --ion-text-color: #000000;
+  --ion-toolbar-background: #f4f5f8;
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 20px;
+}
+
+ion-toolbar {
+  --padding-top: var(--ion-safe-area-top);
+  min-height: calc(56px + var(--ion-safe-area-top)) !important;
+}
+
+ion-tab-bar {
+  --padding-bottom: var(--ion-safe-area-bottom);
+  height: calc(56px + var(--ion-safe-area-bottom)) !important;
+}
+
+ion-toolbar::part(container) {
+  padding-top: var(--ion-safe-area-top);
+}
+
+ion-tab-bar::part(container) {
+  padding-bottom: var(--ion-safe-area-bottom);
+}
+.ion-page {
+  justify-content: flex-start;
+}
+
+ion-content {
+  --offset-top: 0px !important;
+  --offset-bottom: 0px !important;
+}
+
+ion-segment {
+  --background: #ffc409;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: 10px;
+  margin-right: 10px;  
+  width: calc(100% - 20px);
+}

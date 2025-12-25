@@ -1,0 +1,14 @@
+/* Target the internal container of the page */
+.tab1-page {
+    --background: #e3f2fd; /* Light blue hex code */
+}
+
+/* Ensure the content area also uses the same color */
+ion-content {
+    --background: #e3f2fd;
+}
+
+/* If you want the safe areas (status bar/bottom) to match exactly */
+ion-page {
+    background-color: #e3f2fd;
+}

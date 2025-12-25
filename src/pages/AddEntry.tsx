@@ -1,7 +1,3 @@
-/*
-  REFERENCE: Ionic (2025) Ion Fab UI component. Available at: https://ionicframework.com/docs/api/fab
-*/
-
 import {
   IonPage, IonHeader, IonToolbar, IonTitle,
   IonContent, IonFab, IonFabButton, IonIcon
@@ -12,10 +8,10 @@ import { DiskStorageService } from '../services/DiskStorageService';
 import EntryListView from '../components/EntryListView';
 import FilterToggle from '../components/FilterToggle';
 
-export default function Tab1({ history }: any) {
-  const [entries, setEntries] = useState<any[]>([]);
+export default function AddEntry({ history }: any) {
+    const [entries, setEntries] = useState<any[]>([]);
   //const [entries, setEntries] = useState([]);
-  const [filter, setFilter] = useState('expense');
+  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
     DiskStorageService.loadEntries().then(setEntries);
@@ -32,11 +28,11 @@ export default function Tab1({ history }: any) {
           <IonTitle>Timeline</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent color='light' scrollY={false}>
+      <IonContent>
         <FilterToggle value={filter} onChange={setFilter} />
         <EntryListView entries={filtered} setEntries={setEntries}/>
         <IonFab vertical="bottom" horizontal="end">
-          <IonFabButton onClick={() => history.push('/add')} color='warning'>
+          <IonFabButton onClick={() => history.push('/add')} color="teal">
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>

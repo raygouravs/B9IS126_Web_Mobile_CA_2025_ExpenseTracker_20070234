@@ -3,7 +3,7 @@
 */
 
 import React from 'react';
-import { IonLabel, IonSegment, IonSegmentButton, SegmentChangeEventDetail } from '@ionic/react';
+import { IonIcon, IonLabel, IonSegment, IonSegmentButton, SegmentChangeEventDetail } from '@ionic/react';
 import { filter } from 'ionicons/icons';
 
 function FilterToggle(props: { value: string, onChange: any }) {

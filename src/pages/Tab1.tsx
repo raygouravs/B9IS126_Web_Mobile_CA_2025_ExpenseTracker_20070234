@@ -21,7 +21,17 @@ export default function Tab1() {
 
   useEffect(() => {
     DiskStorageService.loadEntries().then(setEntries);
+  }, []); 
+
+  useEffect(() => {
+  const handler = (event: CustomEvent) => {
+    setEntries(event.detail);
+  };
+   window.addEventListener('entries:updated', handler as EventListener);
+   return () => window.removeEventListener('entries:updated', handler as EventListener);
   }, []);
+
+
 
   const filtered = entries
     .filter(e => filter === 'all' || e.type === filter)

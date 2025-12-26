@@ -11,6 +11,7 @@ import {
 import { Entry } from '../models/Entry';
 import { addOutline, removeOutline, trash } from 'ionicons/icons';
 import { DiskStorageService } from '../services/DiskStorageService';
+import './EntryListView.css';
 
 const formatDateString = (dateString: string) => {
     const dateStr = dateString;
@@ -24,13 +25,14 @@ const formatDateString = (dateString: string) => {
 export default function EntryListView(props: { entries: Entry[], setEntries: any }) {
 
   const handleDelete = async (id: string) => {
-    let up_entries = props.entries.filter(e => e.id !== id);
+    let saved_entries = await DiskStorageService.loadEntries();
+    let up_entries = saved_entries.filter(e => e.id !== id);
     await DiskStorageService.saveEntries(up_entries);
     props.setEntries(up_entries);
   };
 
   return (
-    <IonList inset={true} style={{ background: 'transparent' }}>
+    <IonList inset={true} style={{ background: 'transparent' }} lines='none'>
       {props.entries.map((e) => (
         <IonItemSliding key={e.id}>
           <IonItem 
@@ -72,12 +74,23 @@ export default function EntryListView(props: { entries: Entry[], setEntries: any
               )}
             </IonLabel>
           </IonItem>
+          <IonItemOptions side="end" className="swipe-options">
+            <IonItemOption
+            color="danger"
+            className="swipe-delete"
+            onClick={() => handleDelete(e.id)}>
+            <IonIcon slot="icon-only" icon={trash} />
+            </IonItemOption>
+          </IonItemOptions>
 
+          {/*
           <IonItemOptions side="end">
             <IonItemOption color="danger" onClick={() => handleDelete(e.id)}>
               <IonIcon slot="icon-only" icon={trash} />
             </IonItemOption>
           </IonItemOptions>
+          */} 
+
         </IonItemSliding>
       ))}
     </IonList>

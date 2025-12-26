@@ -39,8 +39,12 @@ export default function AddEntry({ history }: any) {
       expense_category: category,
       income_source: source
     };
-    DiskStorageService.saveEntry(new_entry);
+    await DiskStorageService.saveEntry(new_entry);
     VibrationService.vibrate();
+    let updated = await DiskStorageService.loadEntries();
+    window.dispatchEvent(
+        new CustomEvent('entries:updated', { detail: updated })
+    );
     ionRouter.goBack();
   }
 

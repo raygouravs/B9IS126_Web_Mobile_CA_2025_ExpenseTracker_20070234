@@ -1,0 +1,11 @@
+.swipe-options {
+  padding-right: 6px;
+}
+
+.swipe-delete {
+  border-radius: 12px;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}

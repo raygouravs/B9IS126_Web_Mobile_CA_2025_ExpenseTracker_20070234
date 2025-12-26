@@ -46,8 +46,8 @@ ion-content {
 
 ion-segment {
   --background: #ffc409;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 25px;
+  margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;  
   width: calc(100% - 20px);

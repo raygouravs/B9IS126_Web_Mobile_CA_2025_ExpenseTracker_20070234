@@ -9,6 +9,7 @@ export interface Entry {
   expense_category?: string;
   income_source?: string;
   description: string;
+  timestamp: number;
 }
 
 

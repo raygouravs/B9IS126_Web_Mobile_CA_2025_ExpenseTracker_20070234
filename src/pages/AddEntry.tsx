@@ -49,7 +49,8 @@ export default function AddEntry({ history }: any) {
       amount,
       expense_category: category,
       income_source: source,
-      description
+      description,
+      timestamp: Date.now()
     };
     await DiskStorageService.saveEntry(new_entry);
     VibrationService.vibrate();
@@ -116,6 +117,7 @@ export default function AddEntry({ history }: any) {
               color='warning'
               presentation="date"
               value={date}
+              max={new Date().toISOString()}
               onIonChange={handleDateSave}
             />
         </IonItem>

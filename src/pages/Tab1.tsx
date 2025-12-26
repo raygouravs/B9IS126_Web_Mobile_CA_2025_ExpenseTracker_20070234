@@ -37,6 +37,8 @@ export default function Tab1() {
     .filter(e => filter === 'all' || e.type === filter)
     .sort((a, b) => b.date.localeCompare(a.date));
 
+  const sortedEntries = filtered.sort((a, b) => b.timestamp - a.timestamp);
+
   return (
     <IonPage>
       <IonHeader>
@@ -48,7 +50,7 @@ export default function Tab1() {
         <FilterToggle value={filter} onChange={setFilter} />
       </IonItem>
       <IonContent color='light'>
-        <EntryListView entries={filtered} setEntries={setEntries}/>
+        <EntryListView entries={sortedEntries} setEntries={setEntries}/>
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={() => ionRouter.push('/add', 'forward')} color='warning'>
             <IonIcon icon={add} />

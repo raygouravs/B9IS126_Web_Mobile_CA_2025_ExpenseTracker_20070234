@@ -28,6 +28,11 @@ ion-tab-bar {
   height: calc(56px + var(--ion-safe-area-bottom)) !important;
 }
 
+ion-tab-bar {
+  --color-selected: var(--ion-color-warning);
+  --color: var(--ion-color-medium);           
+}
+
 ion-toolbar::part(container) {
   padding-top: var(--ion-safe-area-top);
 }

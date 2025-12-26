@@ -72,6 +72,10 @@ export default function EntryListView(props: { entries: Entry[], setEntries: any
                   <b>Source:</b> {e.income_source}
                 </p>
               )}
+
+              <p style={{ fontSize: '0.95rem', color: '#349', marginBottom: '4px' }}>
+                <b>Desc:</b> {e.description}
+              </p>
             </IonLabel>
           </IonItem>
           <IonItemOptions side="end" className="swipe-options">

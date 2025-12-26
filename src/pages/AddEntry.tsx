@@ -18,6 +18,7 @@ export default function AddEntry({ history }: any) {
   const [category, setCategory] = useState('');
   const [source, setSource] = useState('');
   const [date, setDate] = useState(new Date().toISOString());
+  const [description, setDescription] = useState('');
   const ionRouter = useIonRouter();
 
   function close() {
@@ -29,12 +30,16 @@ export default function AddEntry({ history }: any) {
         window.alert('Please enter an amount!');
         return;
     }
-    if(type === 'income' && source === ''){
+    if(type === 'income' && source.trim() === ''){
         window.alert('Please enter a source!');
         return;
     }
-    if(type === 'expense' && category === ''){
+    if(type === 'expense' && category.trim() === ''){
         window.alert('Please enter a category!');
+        return;
+    }
+    if(description.trim() === ''){
+        window.alert('Please enter a description!');
         return;
     }
     let new_entry = {
@@ -43,7 +48,8 @@ export default function AddEntry({ history }: any) {
       date,
       amount,
       expense_category: category,
-      income_source: source
+      income_source: source,
+      description
     };
     await DiskStorageService.saveEntry(new_entry);
     VibrationService.vibrate();
@@ -206,7 +212,35 @@ export default function AddEntry({ history }: any) {
         )}
 
         <div style={{ height: '8px' }} />
-    
+
+          <div>
+          <IonLabel 
+            style={{ 
+              color: '#ffc409', 
+              fontWeight: 'bold', 
+              fontSize: '0.9rem',
+              display: 'block',
+              marginBottom: '8px'
+            }}>
+            Description:</IonLabel>
+          <IonInput
+            placeholder="add a description..."
+            value={description}
+            maxlength={30}              
+            counter={true}
+            onIonInput={e => setDescription(e.detail.value!)}
+            style={{
+              '--background': '#e0e0e0',
+              '--padding-start': '12px',
+              '--border-radius': '8px',
+              'color': 'black',
+              'minHeight': '45px'
+            } as React.CSSProperties}
+          />
+        </div>
+
+        <div style={{ height: '8px' }} />
+
         <IonButton expand="block" onClick={save} color='warning'>Save</IonButton>
         <div style={{ height: '8px' }} />
         <IonButton expand="block" onClick={close} color='danger'>Close</IonButton>

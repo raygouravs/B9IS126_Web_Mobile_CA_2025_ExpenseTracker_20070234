@@ -8,6 +8,7 @@ export interface Entry {
   amount: number;
   expense_category?: string;
   income_source?: string;
+  description: string;
 }
 
 

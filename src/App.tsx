@@ -48,6 +48,7 @@ import './theme/variables.css';
 
 setupIonicReact();
 
+/*
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
@@ -84,6 +85,48 @@ const App: React.FC = () => (
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
+    </IonReactRouter>
+  </IonApp>
+);
+*/
+
+const App: React.FC = () => (
+  <IonApp>
+    <IonReactRouter>
+      <IonRouterOutlet>
+        <Route path="/tabs" render={() => (
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route exact path="/tabs/tab1"><Tab1 /></Route>
+              <Route exact path="/tabs/tab2"><Tab2 /></Route>
+              <Route exact path="/tabs/tab3"><Tab3 /></Route>
+            </IonRouterOutlet>
+            
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="tab1" href="/tabs/tab1">
+                <IonIcon icon={list} />
+                <IonLabel>Timeline</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab2" href="/tabs/tab2">
+                <IonIcon icon={wallet} />
+                <IonLabel>Wallet</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab3" href="/tabs/tab3">
+                <IonIcon icon={cog} />
+                <IonLabel>Settings</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        )} />
+
+        <Route exact path="/add">
+          <AddEntry />
+        </Route>
+
+        <Route exact path="/">
+          <Redirect to="/tabs/tab1" />
+        </Route>
+      </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
 );

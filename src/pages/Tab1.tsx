@@ -4,7 +4,8 @@
 
 import {
   IonPage, IonHeader, IonToolbar, IonTitle,
-  IonContent, IonFab, IonFabButton, IonIcon
+  IonContent, IonFab, IonFabButton, IonIcon,
+  useIonRouter, IonItem
 } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
@@ -12,7 +13,8 @@ import { DiskStorageService } from '../services/DiskStorageService';
 import EntryListView from '../components/EntryListView';
 import FilterToggle from '../components/FilterToggle';
 
-export default function Tab1({ history }: any) {
+export default function Tab1() {
+  const ionRouter = useIonRouter();
   const [entries, setEntries] = useState<any[]>([]);
   //const [entries, setEntries] = useState([]);
   const [filter, setFilter] = useState('expense');
@@ -32,11 +34,13 @@ export default function Tab1({ history }: any) {
           <IonTitle>Timeline</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent color='light' scrollY={false}>
+      <IonItem color='light' lines="none">
         <FilterToggle value={filter} onChange={setFilter} />
+      </IonItem>
+      <IonContent color='light'>
         <EntryListView entries={filtered} setEntries={setEntries}/>
-        <IonFab vertical="bottom" horizontal="end">
-          <IonFabButton onClick={() => history.push('/add')} color='warning'>
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => ionRouter.push('/add', 'forward')} color='warning'>
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>

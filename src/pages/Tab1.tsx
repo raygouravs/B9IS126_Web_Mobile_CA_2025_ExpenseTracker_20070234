@@ -44,7 +44,7 @@ export default function Tab1() {
   const [filter, setFilter] = useState('all');
   let datas = [0, 0];
   const [bgraphdata, setBgraphdata] = useState({
-      labels: ['Income', 'Expenses'],
+      labels: ['Income', 'Expense'],
       datasets: [
         {
           label: 'Cashflow',
@@ -88,7 +88,7 @@ export default function Tab1() {
     })
     const newdatas = [income, expenses];
     setBgraphdata({
-      labels: ['Income', 'Expenses'],
+      labels: ['Income', 'Expense'],
       datasets: [
         {
           label: 'Cashflow',

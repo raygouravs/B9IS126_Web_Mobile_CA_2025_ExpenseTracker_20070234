@@ -13,3 +13,13 @@ export interface MonthlyStats {
   expense: number,
   income: number
 }
+
+export interface DoughnutData {
+  labels: string[],
+  datasets: {
+    label: string,
+    data: number[],
+    backgroundColor: string[],
+    hoverOffset: number
+  }[]
+}

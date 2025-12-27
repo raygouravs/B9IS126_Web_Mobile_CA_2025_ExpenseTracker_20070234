@@ -7,6 +7,8 @@ import WalletBottomHalfComponent from '../components/WalletBottomHalfComponent';
 import { ModuleNode } from 'vite';
 import { UtilityMethods } from '../utils/utilitymethods';
 import { useIonViewWillEnter } from '@ionic/react';
+import { enterOutline } from 'ionicons/icons';
+import { DoughnutData } from '../utils/utilitymethods';
 
 export default function Tab2() {
   const [cashflow, setCashflow] = useState(0);
@@ -16,6 +18,28 @@ export default function Tab2() {
   const [tincome, setTincome] = useState(0);
   const [texpense, setTexpense] = useState(0);
   const [mcashflow, setMcashflow] = useState<number[]>([]);
+  const [expensedoughnutData, setExpensedoughnutData] = useState<DoughnutData>({
+    labels: [],
+    datasets: [
+      {
+        label: '',
+        data: [],
+        backgroundColor: [],
+        hoverOffset: 4
+      }
+    ]
+  });
+  const [incomedoughnutData, setIncomedoughnutData] = useState<DoughnutData>({
+    labels: [],
+    datasets: [
+      {
+        label: '',
+        data: [],
+        backgroundColor: [],
+        hoverOffset: 4
+      }
+    ]
+  });
 
 
   const initData = async () => {
@@ -69,6 +93,66 @@ export default function Tab2() {
       setTincome(t_income);
       setTexpense(t_expense);
       setMcashflow(updated_mcf);
+
+      //doughnut data -
+      // expenses doughnut
+      let expenseEntries = entries.filter(e => e.type === 'expense');
+      let expenseCategories: string[] = expenseEntries.map(e => e.expense_category ?? 'General');
+      let expenseValues: number[] = [];
+      expenseCategories.forEach((category) => {
+        let catsum = 0;
+        expenseEntries.forEach((entry) => {
+          if(entry.expense_category === category) {
+            catsum = catsum + entry.amount;
+          }
+        })
+        expenseValues.push(catsum);
+      })
+    
+      // income doughnut
+      let incomeEntries = entries.filter(e => e.type === 'income');
+      let incomeSources: string[] = incomeEntries.map(e => e.income_source ?? 'General');
+      let incomeValues: number[] = [];
+      incomeSources.forEach((source) => {
+        let catsum = 0;
+        incomeEntries.forEach((entry) => {
+          if(entry.income_source === source) {
+            catsum = catsum + entry.amount;
+          }
+        })
+        incomeValues.push(catsum);
+      })
+
+      //set doughnut data state
+      setExpensedoughnutData({
+        labels: expenseCategories,
+        datasets: [{
+          label: 'Expenses',
+          data: expenseValues,
+          backgroundColor: [
+            '#5470c6',
+            '#91cc75', 
+            '#fac858', 
+            '#ee6666', 
+            '#73c0de', 
+            '#3ba272', 
+            '#fc8452', 
+            '#9a60b4', 
+            '#ea7ccc'  
+          ],
+          hoverOffset: 10
+        }]
+      });
+
+      setIncomedoughnutData({
+        labels: incomeSources,
+        datasets: [{
+          label: 'Income',
+          data: incomeValues,
+          backgroundColor: ['#91cc75', '#3ba272', '#fac858'],
+          hoverOffset: 10
+        }]
+      });
     }
 
   useIonViewWillEnter(() => {
@@ -97,7 +181,7 @@ export default function Tab2() {
       </IonHeader>
       <IonContent className="ion-padding">
         <WalletTopHalfComponent totalIncome={String(tincome.toFixed(2))} totalExpenses={String(texpense.toFixed(2))} monthlycashflow={mcashflow}/>
-        <WalletBottomHalfComponent />
+        <WalletBottomHalfComponent expenseDoughnutdata={expensedoughnutData} incomeDoughnutdata={incomedoughnutData}/>
       </IonContent>
     </IonPage>
   );

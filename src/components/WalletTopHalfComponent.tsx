@@ -117,7 +117,7 @@ function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: str
               Wallet Balance:
             </IonLabel>
             <IonLabel style={{ fontSize: '1.3rem', fontWeight: 'bold', color: (Number(props.totalIncome)-Number(props.totalExpenses)) >= 0 ? 'var(--ion-color-success, green)' : 'var(--ion-color-danger, red)'}}>
-              € {(Number(props.totalIncome)-Number(props.totalExpenses)) < 0 ? '-' : ''}{Number(props.totalIncome)-Number(props.totalExpenses)}
+              € {Number(props.totalIncome)-Number(props.totalExpenses)}
             </IonLabel>
           </IonItem>
         </div>

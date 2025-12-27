@@ -6,6 +6,11 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Entry } from '../models/Entry';
 import { refresh } from 'ionicons/icons';
 
+interface MonthlyStats {
+  expense: number,
+  income: number
+}
+
 export class DiskStorageService {
   
   private static DEFAULT_DIR = Directory.Data;
@@ -65,11 +70,19 @@ export class DiskStorageService {
 
   private static async savePastDataBeforePurge(olderEntries: Entry[]){
     let monthly_data_dict = await this.loadPastData();
-    olderEntries.forEach((e) => {
+    let past_ExpenseEntries = olderEntries.filter(e => e.type === 'expense');
+    let past_IncomeEntries = olderEntries.filter(e => e.type === 'income');
+    past_ExpenseEntries.forEach((e) => {
       const e_date_month = Number(e.date.split("-")[1]);
-      const currentTotal = monthly_data_dict[e_date_month] || 0;
+      const currentTotal = monthly_data_dict[e_date_month]['expense'] || 0;
       const newTotal = currentTotal + e.amount;
-      monthly_data_dict[e_date_month] = Number(newTotal.toFixed(2));
+      monthly_data_dict[e_date_month]['expense'] = Number(newTotal.toFixed(2));
+    });
+    past_IncomeEntries.forEach((e) => {
+      const e_date_month = Number(e.date.split("-")[1]);
+      const currentTotal = monthly_data_dict[e_date_month]['income'] || 0;
+      const newTotal = currentTotal + e.amount;
+      monthly_data_dict[e_date_month]['income'] = Number(newTotal.toFixed(2));
     });
     //MARK: save older entries to separate json file here !!!
     try {
@@ -152,7 +165,7 @@ export class DiskStorageService {
     }
   }
 
-  static async loadPastData(): Promise<Record<number, number>> {
+  static async loadPastData(): Promise<Record<number, MonthlyStats>> {
     try {
       const MM = this.getCurrentMonth();
       let past_data_path = '';
@@ -169,6 +182,7 @@ export class DiskStorageService {
       return JSON.parse(result.data as string);
     } catch (error) {
       console.error("Error loading file:", error);
+      /*
       const monthly_data_dict: Record<number, number> = {
         1: 0.0,
         2: 0.0,
@@ -182,6 +196,56 @@ export class DiskStorageService {
         10: 0.0,
         11: 0.0,
         12: 0.0
+      };*/
+      const monthly_data_dict: Record<number, MonthlyStats> = {
+        1: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        2: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        3: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        4: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        5: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        6: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        7: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        8: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        9: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        10: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        11: {
+          'expense': 0.0,
+          'income': 0.0
+        },
+        12: {
+          'expense': 0.0,
+          'income': 0.0
+        }
       };
       return monthly_data_dict;
     }

@@ -95,8 +95,8 @@ function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: str
         // Total income = ---
         // Total expenses = ---
         // Wallet balance = --- [green/red color text]
-        <div className="ion-padding ion-text-center" style={{backgroundColor: 'lightgoldenrodyellow', borderRadius: '5px', height: '280px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-          <IonItem>
+        <div className="ion-padding ion-text-center" style={{backgroundColor: 'lightgoldenrodyellow', borderRadius: '15px', height: '280px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+          <IonItem lines='none' style={{'--border-radius': '15px'}}>
             <IonLabel style={{ fontSize: '1.1rem', fontWeight: 'bold' }} color='warning'>
               Total Income:
             </IonLabel>
@@ -104,7 +104,8 @@ function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: str
               € {props.totalIncome}
             </IonLabel>
           </IonItem>
-          <IonItem>
+          <div style={{height: '7px'}}/>
+          <IonItem lines='none' style={{'--border-radius': '15px'}}>
             <IonLabel style={{ fontSize: '1.1rem', fontWeight: 'bold' }} color='warning'>
               Total Expenses:
             </IonLabel>
@@ -112,7 +113,8 @@ function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: str
               € {props.totalExpenses}
             </IonLabel>
           </IonItem>
-          <IonItem>
+          <div style={{height: '7px'}}/>
+          <IonItem lines='none' style={{'--border-radius': '15px'}}>
             <IonLabel style={{ fontSize: '1.1rem', fontWeight: 'bold' }} color='warning'>
               Wallet Balance:
             </IonLabel>

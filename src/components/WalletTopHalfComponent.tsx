@@ -49,7 +49,15 @@ function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: str
         {
           label: 'Cashflow',
           data: props.monthlycashflow,
-          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+          backgroundColor: props.monthlycashflow.map(value => 
+            value >= 0 
+              ? 'rgba(75, 192, 192, 0.6)'
+              : 'rgba(255, 99, 132, 0.6)'
+          ),
+          borderColor: props.monthlycashflow.map(value => 
+            value >= 0 ? 'rgb(75, 192, 192)' : 'rgb(255, 99, 132)'
+          ),
+          borderWidth: 1,
         },
      ],
   };
@@ -87,7 +95,7 @@ function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: str
         // Total income = ---
         // Total expenses = ---
         // Wallet balance = --- [green/red color text]
-        <div className="ion-padding ion-text-center" style={{backgroundColor: 'lightgoldenrodyellow', borderRadius: '5px'}}>
+        <div className="ion-padding ion-text-center" style={{backgroundColor: 'lightgoldenrodyellow', borderRadius: '5px', height: '280px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
           <IonItem>
             <IonLabel style={{ fontSize: '1.1rem', fontWeight: 'bold' }} color='warning'>
               Total Income:

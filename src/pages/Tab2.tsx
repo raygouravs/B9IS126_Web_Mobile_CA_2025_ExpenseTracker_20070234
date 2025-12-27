@@ -6,6 +6,7 @@ import WalletTopHalfComponent from '../components/WalletTopHalfComponent';
 import WalletBottomHalfComponent from '../components/WalletBottomHalfComponent';
 import { ModuleNode } from 'vite';
 import { UtilityMethods } from '../utils/utilitymethods';
+import { useIonViewWillEnter } from '@ionic/react';
 
 export default function Tab2() {
   const [cashflow, setCashflow] = useState(0);
@@ -16,9 +17,8 @@ export default function Tab2() {
   const [texpense, setTexpense] = useState(0);
   const [mcashflow, setMcashflow] = useState<number[]>([]);
 
-  useEffect(() => {
 
-    const initData = async () => {
+  const initData = async () => {
       //current month data
       const entries = await DiskStorageService.loadEntries();
       let income = 0;
@@ -70,7 +70,12 @@ export default function Tab2() {
       setTexpense(t_expense);
       setMcashflow(updated_mcf);
     }
-      
+
+  useIonViewWillEnter(() => {
+    initData();
+  });
+  
+  useEffect(() => {
     initData();
   }, []);
 

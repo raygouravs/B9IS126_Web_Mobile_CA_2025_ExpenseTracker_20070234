@@ -155,7 +155,7 @@ export default function Tab1() {
             <IonLabel className="ion-text-wrap" color='warning'>No entries to show. Use the + button to add some entries!</IonLabel>
           </IonItem>
         )}
-        <EntryListView entries={sortedEntries} setEntries={setEntries}/>
+        <EntryListView entries={sortedEntries} setEntries={setEntries} reloadGraph={loadGraph}/>
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={() => ionRouter.push('/add', 'forward')} color='warning'>
             <IonIcon icon={add} />

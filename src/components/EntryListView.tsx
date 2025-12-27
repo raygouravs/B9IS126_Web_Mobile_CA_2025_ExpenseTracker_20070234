@@ -22,13 +22,14 @@ const formatDateString = (dateString: string) => {
     return customFormat;
 }
 
-export default function EntryListView(props: { entries: Entry[], setEntries: any }) {
+export default function EntryListView(props: { entries: Entry[], setEntries: any, reloadGraph: any }) {
 
   const handleDelete = async (id: string) => {
     let saved_entries = await DiskStorageService.loadEntries();
     let up_entries = saved_entries.filter(e => e.id !== id);
     await DiskStorageService.saveEntries(up_entries);
     props.setEntries(up_entries);
+    props.reloadGraph();
   };
 
   return (

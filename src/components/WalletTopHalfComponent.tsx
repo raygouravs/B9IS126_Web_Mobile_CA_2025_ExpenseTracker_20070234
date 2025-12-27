@@ -42,9 +42,8 @@ interface BarData {
 }
 
 function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: string, monthlycashflow: number[] }) {
-
   const [filter, setFilter] = useState('cashflow');
-  const [bgraphdata, setBgraphdata] = useState<BarData>({
+  const bgraphdata = {
       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       datasets: [
         {
@@ -52,15 +51,15 @@ function WalletTopHalfComponent(props: { totalIncome: string, totalExpenses: str
           data: props.monthlycashflow,
           backgroundColor: 'rgba(54, 162, 235, 0.6)',
         },
-      ],
-    });
+     ],
+  };
     
   return (
     <>
       <WalletSegmentToggle value={filter} onChange={setFilter} />
       {filter === 'cashflow' && (
         // show bar chart for Month v/s Cash-flow
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto', height: '280px' }}>
             <Bar data={bgraphdata} options={{
                   responsive: true,
                   maintainAspectRatio: false,

@@ -5,6 +5,7 @@ import { DiskStorageService } from '../services/DiskStorageService';
 import WalletTopHalfComponent from '../components/WalletTopHalfComponent';
 import WalletBottomHalfComponent from '../components/WalletBottomHalfComponent';
 import { ModuleNode } from 'vite';
+import { UtilityMethods } from '../utils/utilitymethods';
 
 export default function Tab2() {
   const [cashflow, setCashflow] = useState(0);
@@ -52,12 +53,13 @@ export default function Tab2() {
       t_expense = t_expense + expense;
 
       //calculating monthly cash-flow data
-      let mcf = [];
+      let mcf: number[] = [];
       Object.values(past_data).forEach((e) => {
         const monthly_cashflow = e.income - e.expense;
         mcf.push(monthly_cashflow);
       })
-      mcf.push(cash_flow);
+      const idx = UtilityMethods.getCurrentMonth() - 1;
+      const updated_mcf = mcf.with(idx, cash_flow);
 
       //set all state
       setIncome(income);
@@ -66,7 +68,7 @@ export default function Tab2() {
       setTotalwealth(total_wealth);
       setTincome(t_income);
       setTexpense(t_expense);
-      setMcashflow(mcf);
+      setMcashflow(updated_mcf);
     }
       
     initData();

@@ -31,8 +31,6 @@ export default function Tab1() {
    return () => window.removeEventListener('entries:updated', handler as EventListener);
   }, []);
 
-
-
   const filtered = entries
     .filter(e => filter === 'all' || e.type === filter)
     .sort((a, b) => b.date.localeCompare(a.date));

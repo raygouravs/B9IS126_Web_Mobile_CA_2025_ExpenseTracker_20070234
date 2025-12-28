@@ -6,11 +6,12 @@
 
 import { 
   IonList, IonItemSliding, IonLabel, IonIcon, 
-  IonItemOptions, IonItemOption, IonItem 
+  IonItemOptions, IonItemOption, IonItem, IonPopover 
 } from '@ionic/react';
 import { RecurringSchedule } from '../models/RecurringEntry';
-import { addOutline, removeOutline, trash } from 'ionicons/icons';
+import { addOutline, removeOutline, trash, informationCircleOutline } from 'ionicons/icons';
 import ScheduledTransactionsService from '../services/ScheduledTransactionsService';
+import { useState } from 'react';
 
 const formatDateString = (dateString: string) => {
     const dateStr = dateString;
@@ -22,6 +23,8 @@ const formatDateString = (dateString: string) => {
 }
 
 export default function ScheduleListView(props: { schedules: RecurringSchedule[], reloadView: any }) {
+
+  const [popoverEvent, setPopoverEvent] = useState<any>(null);
 
   const handleDelete = async (id: string) => {
     await ScheduledTransactionsService.deleteSchedule(id);
@@ -60,7 +63,7 @@ export default function ScheduleListView(props: { schedules: RecurringSchedule[]
               </p>
 
               <p style={{ fontSize: '0.95rem', color: '#666', marginBottom: '4px' }}>
-                🔔 Notification on: {formatDateString(e.notificationDates[0].split('T')[0])}
+                🔔 Notifications start date: {formatDateString(e.notificationDates[0].split('T')[0])}
               </p>
 
               {e.endDate && (

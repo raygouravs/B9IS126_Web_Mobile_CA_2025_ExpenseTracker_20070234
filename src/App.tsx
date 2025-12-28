@@ -199,7 +199,7 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    updateNotificationsBatch();
+    //updateNotificationsBatch(); ///check later
   }, []);
 
 

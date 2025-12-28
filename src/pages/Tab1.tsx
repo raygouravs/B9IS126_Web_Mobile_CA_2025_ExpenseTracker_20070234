@@ -151,7 +151,7 @@ export default function Tab1() {
       </IonItem>
       <IonContent color='light'>
         {entries.length === 0 && (
-          <IonItem>
+          <IonItem color='dark'>
             <IonLabel className="ion-text-wrap" color='warning'>No entries to show. Use the + button to add some entries!</IonLabel>
           </IonItem>
         )}

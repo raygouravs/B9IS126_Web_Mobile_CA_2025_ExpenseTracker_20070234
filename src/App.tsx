@@ -10,10 +10,11 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { list, wallet, cog } from 'ionicons/icons';
+import { list, wallet, cog, timerOutline } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import Tab4 from './pages/Tab4';
 import AddEntry from './pages/AddEntry';
 
 /* Core CSS required for Ionic components to work properly */
@@ -45,6 +46,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import AddSchedule from './pages/AddSchedule';
 
 setupIonicReact();
 
@@ -100,6 +102,7 @@ const App: React.FC = () => (
               <Route exact path="/tabs/tab1"><Tab1 /></Route>
               <Route exact path="/tabs/tab2"><Tab2 /></Route>
               <Route exact path="/tabs/tab3"><Tab3 /></Route>
+              <Route exact path="/tabs/tab4"><Tab4 /></Route>
             </IonRouterOutlet>
             
             <IonTabBar slot="bottom">
@@ -111,6 +114,10 @@ const App: React.FC = () => (
                 <IonIcon icon={wallet} />
                 <IonLabel>Wallet</IonLabel>
               </IonTabButton>
+              <IonTabButton tab="tab4" href="/tabs/tab4">
+                <IonIcon icon={timerOutline} />
+                <IonLabel>Scheduled</IonLabel>
+              </IonTabButton>
               <IonTabButton tab="tab3" href="/tabs/tab3">
                 <IonIcon icon={cog} />
                 <IonLabel>Settings</IonLabel>
@@ -121,6 +128,10 @@ const App: React.FC = () => (
 
         <Route exact path="/add">
           <AddEntry />
+        </Route>
+
+        <Route exact path="/addSchedule">
+          <AddSchedule />
         </Route>
 
         <Route exact path="/">

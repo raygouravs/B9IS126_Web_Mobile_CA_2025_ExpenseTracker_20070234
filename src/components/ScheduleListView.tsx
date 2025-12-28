@@ -6,26 +6,23 @@
 
 import { 
   IonList, IonItemSliding, IonLabel, IonIcon, 
-  IonItemOptions, IonItemOption, IonItem, IonPopover 
+  IonItemOptions, IonItemOption, IonItem, 
+  IonButton
 } from '@ionic/react';
 import { RecurringSchedule } from '../models/RecurringEntry';
-import { addOutline, removeOutline, trash, informationCircleOutline } from 'ionicons/icons';
+import { addOutline, informationCircleOutline, removeOutline, trash } from 'ionicons/icons';
 import ScheduledTransactionsService from '../services/ScheduledTransactionsService';
-import { useState } from 'react';
 
 const formatDateString = (dateString: string) => {
     const dateStr = dateString;
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const [year, month, day] = dateStr.split("-");
-    const customFormat = `${months[parseInt(month) - 1]} ${parseInt(day)}, ${year}`;
+    const customFormat = `${months[parseInt(month) - 1]} ${parseInt(day)} ${year}`;
     console.log(customFormat); // Output: "Dec 25, 2025"
     return customFormat;
 }
 
 export default function ScheduleListView(props: { schedules: RecurringSchedule[], reloadView: any }) {
-
-  const [popoverEvent, setPopoverEvent] = useState<any>(null);
-
   const handleDelete = async (id: string) => {
     await ScheduledTransactionsService.deleteSchedule(id);
     const up_schedules = await ScheduledTransactionsService.loadSchedules();
@@ -62,9 +59,44 @@ export default function ScheduleListView(props: { schedules: RecurringSchedule[]
                 Start date: {formatDateString(e.startDate)}
               </p>
 
-              <p style={{ fontSize: '0.95rem', color: '#666', marginBottom: '4px' }}>
-                🔔 Notifications start date: {formatDateString(e.notificationDates[0].split('T')[0])}
-              </p>
+              <div style={{
+                          display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            marginBottom: '4px'
+                          }}>
+                          <p style={{
+                              fontSize: '0.95rem',
+                              color: '#666',
+                              margin: 0,
+                              lineHeight: 1.4
+                            }}>
+                            🔔 Notifications start: {formatDateString(e.notificationDates[0].split('T')[0])}
+                          </p>
+
+                          <IonButton
+                            fill="clear"
+                            size="small"
+                            onClick={(ev) => {
+                              ev.stopPropagation();
+                              window.alert("Scheduled Notification dates are: " + e.notificationDates.map((d) => formatDateString(d.split('T')[0])).join(', '));
+                            }}
+                            style={{
+                              '--padding-start': '2px',
+                              '--padding-end': '2px',
+                              height: '22px',
+                              margin: 0
+                            }}
+                          >
+                            <IonIcon
+                              slot="icon-only"
+                              icon={informationCircleOutline}
+                              color="medium"
+                              style={{ fontSize: '16px' }}
+                            />
+                          </IonButton>
+                        </div>
+
 
               {e.endDate && (
                 <p style={{ fontSize: '0.95rem', color: '#666', marginBottom: '4px' }}>

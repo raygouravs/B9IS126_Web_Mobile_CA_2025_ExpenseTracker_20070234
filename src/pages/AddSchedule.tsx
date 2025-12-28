@@ -13,6 +13,7 @@ import ScheduledTransactionsService from '../services/ScheduledTransactionsServi
 import { VibrationService } from '../services/VibrationService';
 import { RecurrencePeriod } from '../models/RecurringEntry';
 import LocalNotificationService from '../services/LocalNotificationService';
+import { showToast } from '../utils/utilitymethods';
 
 export default function AddSchedule({ history }: any) {
   const [type, setType] = useState<'income' | 'expense'>('expense');
@@ -44,7 +45,7 @@ export default function AddSchedule({ history }: any) {
     if (period === 'monthly') count = 12;
     else if (period === 'weekly') count = 48;
     else if (period === 'yearly') count = 2;
-
+    
     const currentDate = new Date(startDateStr);
     currentDate.setDate(currentDate.getDate() - 1);
     currentDate.setHours(9, 0, 0, 0);

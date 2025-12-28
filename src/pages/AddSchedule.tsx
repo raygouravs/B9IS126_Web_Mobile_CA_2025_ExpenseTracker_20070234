@@ -12,6 +12,7 @@ import { v4 as uuid } from 'uuid';
 import ScheduledTransactionsService from '../services/ScheduledTransactionsService';
 import { VibrationService } from '../services/VibrationService';
 import { RecurrencePeriod } from '../models/RecurringEntry';
+import LocalNotificationService from '../services/LocalNotificationService';
 
 export default function AddSchedule({ history }: any) {
   const [type, setType] = useState<'income' | 'expense'>('expense');
@@ -58,7 +59,6 @@ export default function AddSchedule({ history }: any) {
       startDate: sdate,
       notificationDate: calculateNotificationDate(sdate),
       timestamp: Date.now(),
-      
     };
     await ScheduledTransactionsService.saveSchedule(new_schedule);
     VibrationService.vibrate();
@@ -66,6 +66,9 @@ export default function AddSchedule({ history }: any) {
     window.dispatchEvent(
         new CustomEvent('schedules:updated', { detail: updated })
     );
+    await LocalNotificationService.scheduleReminder(description, calculateNotificationDate(sdate));
+    //toggle below comment for testing -
+    //await LocalNotificationService.scheduleReminder(description, '2025-12-28T04:32:00.000Z');
     ionRouter.goBack();
 }
 

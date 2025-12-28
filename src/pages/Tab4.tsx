@@ -32,8 +32,6 @@ const Tab4: React.FC = () => {
     loadView();
   });
 
-
-  
   return (
     <IonPage>
       <IonHeader>
@@ -47,7 +45,7 @@ const Tab4: React.FC = () => {
               <IonLabel className="ion-text-wrap" color='warning'>No schedules to show. Use the + button to add some schedules!</IonLabel>
             </IonItem>
           )}
-        <ScheduleListView schedules={schedules} setSchedules={setSchedules} />
+        <ScheduleListView schedules={schedules} reloadView={loadView} />
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={() => ionRouter.push('/addSchedule', 'forward')} color='warning'>
             <IonIcon icon={add} />

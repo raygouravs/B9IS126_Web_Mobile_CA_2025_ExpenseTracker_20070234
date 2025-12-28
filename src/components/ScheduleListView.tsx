@@ -21,13 +21,12 @@ const formatDateString = (dateString: string) => {
     return customFormat;
 }
 
-export default function ScheduleListView(props: { schedules: RecurringSchedule[], setSchedules: any }) {
+export default function ScheduleListView(props: { schedules: RecurringSchedule[], reloadView: any }) {
 
   const handleDelete = async (id: string) => {
     await ScheduledTransactionsService.deleteSchedule(id);
     const up_schedules = await ScheduledTransactionsService.loadSchedules();
-    props.setSchedules(up_schedules);
-    
+    props.reloadView();
   };
 
   return (
@@ -52,7 +51,7 @@ export default function ScheduleListView(props: { schedules: RecurringSchedule[]
               style={{ fontSize: 24, color: e.type === 'income' ? '#2dd36f' : '#eb445a'}}
             />
              <IonLabel className="ion-text-wrap" style={{ display: 'block' }}>
-               <p style={{ fontSize: '1.1rem', color: e.type === 'income' ? 'rgba(45, 211, 111, 1.0)' : 'rgba(235, 68, 90, 0.15)', marginBottom: '4px', fontWeight: 'bold' }}>
+               <p style={{ fontSize: '1.1rem', color: e.type === 'income' ? 'olive' : 'maroon', marginBottom: '4px', fontWeight: 'bold' }}>
                  {e.type.toUpperCase()} — €{e.amount.toFixed(2)}
                </p>
               
@@ -79,9 +78,9 @@ export default function ScheduleListView(props: { schedules: RecurringSchedule[]
           </IonItem>
           <IonItemOptions side="end" className="swipe-options">
             <IonItemOption
-            color="danger"
-            className="swipe-delete"
-            onClick={() => handleDelete(e.id)}>
+                color="danger"
+                className="swipe-delete"
+                onClick={() => handleDelete(e.id)}>
             <IonIcon slot="icon-only" icon={trash} />
             </IonItemOption>
           </IonItemOptions>

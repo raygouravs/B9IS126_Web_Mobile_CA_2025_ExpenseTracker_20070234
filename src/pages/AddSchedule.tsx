@@ -79,12 +79,14 @@ const handleStartDateSave = (e: CustomEvent) => {
   }
 };
 
-useEffect(() => {
+useEffect(() => { 
    const todaysDate: string = new Date().toISOString().split('T')[0];
-   const year: string = todaysDate.split("-")[0];
-   const month: string = todaysDate.split("-")[1];
-   const dat: string = todaysDate.split("-")[2];
-   setMindate(year+'-'+month+'-'+dat);
+   const tomorrowDate: string = new Date(
+    new Date(todaysDate).setDate(new Date(todaysDate).getDate() + 1)
+   )
+  .toISOString()
+  .split('T')[0];
+   setMindate(tomorrowDate);
 }, []);
 
 return (

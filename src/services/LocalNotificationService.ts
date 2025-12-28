@@ -4,6 +4,7 @@
 
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { showToast } from "../utils/utilitymethods";
+import ScheduledTransactionsService from "./ScheduledTransactionsService";
 
 export default class LocalNotificationService {
 
@@ -27,7 +28,7 @@ export default class LocalNotificationService {
         }
    }
 
-    static scheduleReminder = async (description: string, notificationFireDate: string) => {
+    static scheduleReminder = async (description: string, notificationFireDate: string, schedID:string) => {
         try {
 
             const hasPermission = await LocalNotificationService.checkNotificationPermission();
@@ -43,12 +44,13 @@ export default class LocalNotificationService {
                 return; 
             }
 
+            const notification_id = Math.floor(Math.random() * 1000000);
             await LocalNotifications.schedule({
                 notifications: [
                     {
                         title: "Alert! Upcoming Transaction...",
                         body: `Reminder: ${description} is due tomorrow!`,
-                        id: Math.floor(Math.random() * 1000000), 
+                        id: notification_id, 
                         channelId: 'budget_alerts_high_v3',
                         schedule: { 
                             at: new Date(notificationFireDate),
@@ -61,6 +63,7 @@ export default class LocalNotificationService {
                 ]
             });
 
+            await ScheduledTransactionsService.saveNotificationID(schedID, notification_id);
             showToast(`Notification scheduled successfully for: ${notificationFireDate}`, 'short');
 
         } catch (error) {
@@ -95,7 +98,14 @@ export default class LocalNotificationService {
         sound: 'default',
         vibration: true,
       });
-    };
+    }
+
+    static cancelNotification = async (id: number) => {
+        await LocalNotifications.cancel({
+            notifications: [{ id: id }]
+        });
+        console.log(`Notification ${id} cancelled`);
+    }
 }
 
 

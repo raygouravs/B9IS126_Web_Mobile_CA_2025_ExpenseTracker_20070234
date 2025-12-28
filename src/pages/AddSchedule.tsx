@@ -66,7 +66,7 @@ export default function AddSchedule({ history }: any) {
     window.dispatchEvent(
         new CustomEvent('schedules:updated', { detail: updated })
     );
-    await LocalNotificationService.scheduleReminder(description, calculateNotificationDate(sdate));
+    await LocalNotificationService.scheduleReminder(description, calculateNotificationDate(sdate), new_schedule.id);
     //toggle below comment for testing -
     //await LocalNotificationService.scheduleReminder(description, '2025-12-28T04:32:00.000Z');
     ionRouter.goBack();

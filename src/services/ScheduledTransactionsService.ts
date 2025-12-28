@@ -4,6 +4,7 @@
 import { Preferences } from '@capacitor/preferences';
 import { RecurringSchedule, RecurrencePeriod } from '../models/RecurringEntry';
 import { MonthlyBudget, showToast } from '../utils/utilitymethods';
+import LocalNotificationService from '../services/LocalNotificationService';
 
 const SCHEDULE_KEY = 'recurring_transactions';
 const BUDGET_KEY_PREFIX = 'budget_'; // 'bugdet_2025_12'
@@ -35,6 +36,9 @@ export default class ScheduledTransactionsService {
             key: SCHEDULE_KEY,
             value: JSON.stringify(filteredSchedules)
         });
+        const notif_id_to_delete = this.getNotificationIDBySchedID(id);
+        await LocalNotificationService.cancelNotification(Number(notif_id_to_delete));
+        showToast('Scheduled transaction deleted successfully!', 'short');
     }
 
     //setting screen budget tracker
@@ -54,6 +58,20 @@ export default class ScheduledTransactionsService {
         const budget_key = this.budgetKeyGen(budget);
         const { value } = await Preferences.get({ key: budget_key});
         return value ? JSON.parse(value) : {amount: 0, month: budget.month, year: budget.year};
+    }
+
+    //store notification IDs
+    static saveNotificationID = async (schedID:string, notID:number) => {
+        await Preferences.set({
+            key: schedID,
+            value: String(notID)
+        });
+    }
+
+    //fetch notification ID
+    static getNotificationIDBySchedID = async (schedID:string): Promise<string> => {
+        const { value } = await Preferences.get({ key: schedID });
+        return value ?? '000';
     }
 }
 

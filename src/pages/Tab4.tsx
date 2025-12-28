@@ -26,7 +26,8 @@ const Tab4: React.FC = () => {
 
   const loadView = async () => {
     const scheds = await ScheduledTransactionsService.loadSchedules();
-    setSchedules(scheds);
+    const sortedScheds = scheds.sort((a, b) => b.timestamp - a.timestamp);
+    setSchedules(sortedScheds);
   }
 
   useIonViewWillEnter(() => {

@@ -3,7 +3,8 @@
 */
 import { IonContent, IonHeader, IonPage, 
          IonTitle, IonToolbar, IonItem,
-         IonLabel, IonInput, IonButton, IonProgressBar } from '@ionic/react';
+         IonLabel, IonInput, IonButton, 
+         IonProgressBar, IonLoading } from '@ionic/react';
 import './Tab3.css';
 import { useEffect, useState } from 'react';
 import { MonthlyBudget, showToast } from '../utils/utilitymethods';
@@ -17,6 +18,7 @@ const Tab3: React.FC = () => {
   const [editable, setEditable] = useState<boolean>(false);
   const [pval, setPval] = useState<number>(0.0);
   const [buttontitle, setButtontitle] = useState<'Modify' | 'Save'>('Modify');
+  const [showLoading, setShowLoading] = useState<boolean>(false);
   const BUDGET_KEY_PREFIX = 'budget_'; // 'bugdet_2025_12'
 
   const getCurrentMonth = () => {
@@ -48,6 +50,7 @@ const Tab3: React.FC = () => {
 
     // save mode
     if(editable === true){
+      setShowLoading(true);
       const cyear = getCurrentYear();
       const cmonth = getCurrentMonth();
       const updatedBudget: MonthlyBudget = {
@@ -60,6 +63,7 @@ const Tab3: React.FC = () => {
       budgetProgressTracker();
       setEditable(false)
       setButtontitle('Modify')
+      setShowLoading(false);
       showToast('Budget updated successfully!', 'short');
     }
   }
@@ -135,6 +139,11 @@ const Tab3: React.FC = () => {
                 <IonProgressBar value={pval} color={pval < 1 ? 'success' : 'danger'} />
               </div>
       </IonContent>
+      <IonLoading
+      isOpen={showLoading}
+      message={'Saving budget...'}
+      spinner="crescent"
+    />
     </IonPage>
   );
 };

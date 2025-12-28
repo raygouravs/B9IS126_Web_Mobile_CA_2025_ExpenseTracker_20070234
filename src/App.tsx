@@ -16,6 +16,10 @@ import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import Tab4 from './pages/Tab4';
 import AddEntry from './pages/AddEntry';
+import { MonthlyBudget } from './utils/utilitymethods';
+import ScheduledTransactionsService from './services/ScheduledTransactionsService';
+import { DiskStorageService } from './services/DiskStorageService';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -96,12 +100,77 @@ const App: React.FC = () => (
 
 const App: React.FC = () => {
 
+  const getCurrentMonth = () => {
+      const todaysDate: string = new Date().toISOString().split('T')[0];
+      // "2025-12-26"
+      const parts: string[] = todaysDate.split("-");
+      const MM = parts[1];
+      return MM;
+    }
+  
+    const getCurrentYear = () => {
+      const todaysDate: string = new Date().toISOString().split('T')[0];
+      // "2025-12-26"
+      const parts: string[] = todaysDate.split("-");
+      const YYYY = parts[0];
+      return YYYY;
+    }
+  
+    async function budgetProgressTracker(){
+      const cyear = getCurrentYear();
+      const cmonth = getCurrentMonth();
+      const gbudget:MonthlyBudget = {
+        amount: 0,
+        month: cmonth,
+        year: cyear
+      }
+      const current_month_budget_obj = await ScheduledTransactionsService.getMonthlyBudget(gbudget);
+      const current_month_budget_amt = current_month_budget_obj.amount;
+      if(current_month_budget_amt === 0 || current_month_budget_amt === 0.0){
+        return;
+      } 
+      const entries = await DiskStorageService.loadEntries();
+      let t_expense:number = 0;
+      t_expense = entries.reduce((acc, e) => {
+        if(e.type === 'expense'){
+          acc = acc + e.amount;
+        }
+        return acc;
+      }, 0)
+      let progress = t_expense/current_month_budget_amt;
+      if(progress>1){
+        progress = 1.0;
+      }
+      if(progress===1.0 || progress===1){
+        await LocalNotificationService.budgetNotification();
+      }
+  }
+
+  const initNotificationChannel = async () => {
+    await LocalNotificationService.createNotificationChannel();
+  }
+
+  useEffect(() => {
+    initNotificationChannel();
+  }, []);
+
+  //MARK: local notification listener for banner display
+  useEffect(() => {
+    LocalNotifications.addListener('localNotificationReceived', (notification) => {
+      console.log('Notification received while app is open:', notification);
+    });
+  }, []);
+
   useEffect(() => {
     const init = async () => {
       await LocalNotificationService.checkAndRequestNotificationPermissions();
     };
 
     init();
+  }, []);
+
+   useEffect(() => {
+    budgetProgressTracker();
   }, []);
 
 

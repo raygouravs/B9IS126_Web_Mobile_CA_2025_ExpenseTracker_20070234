@@ -49,6 +49,7 @@ export default class LocalNotificationService {
                         title: "Alert! Upcoming Transaction...",
                         body: `Reminder: ${description} is due tomorrow!`,
                         id: Math.floor(Math.random() * 1000000), 
+                        channelId: 'budget_alerts_high_v3',
                         schedule: { 
                             at: new Date(notificationFireDate),
                             allowWhileIdle: true
@@ -66,6 +67,34 @@ export default class LocalNotificationService {
             console.error("Error in scheduling reminder:", error);
             showToast("Error in scheduling reminder!", 'short');
         }
+    }
+
+    static budgetNotification = async () => {
+        await LocalNotifications.schedule({
+                notifications: [
+                {
+                    title: "Budget Alert! ⚠️",
+                    body: `You have reached your monthly budget limit of this month!`,
+                    id: 999,
+                    channelId: 'budget_alerts_high_v3',
+                    schedule: { at: new Date(Date.now() + 1000) },
+                    sound: 'default',
+                    extra: null
+                }
+                ]
+        }); 
+    }
+
+    static createNotificationChannel = async () => {
+      await LocalNotifications.createChannel({
+        id: 'budget_alerts_high_v3',
+        name: 'Budget & Reminders',
+        description: 'Critical alerts for budget limits',
+        importance: 5,
+        visibility: 1,
+        sound: 'default',
+        vibration: true,
+      });
     };
 }
 

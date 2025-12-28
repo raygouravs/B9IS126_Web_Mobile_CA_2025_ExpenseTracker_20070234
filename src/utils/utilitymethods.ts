@@ -1,3 +1,4 @@
+import { Toast } from '@capacitor/toast';
 
 export class UtilityMethods {
     static getCurrentMonth = () => {
@@ -23,3 +24,13 @@ export interface DoughnutData {
     hoverOffset: number
   }[]
 }
+
+
+export const showToast = async (desc: string, duration: 'short' | 'long') => {
+  await Toast.show({
+    text: desc,
+    duration: duration,
+    position: 'bottom',
+  });
+};
+

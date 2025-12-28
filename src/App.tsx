@@ -47,6 +47,8 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import AddSchedule from './pages/AddSchedule';
+import LocalNotificationService from './services/LocalNotificationService';
+import { useEffect } from 'react';
 
 setupIonicReact();
 
@@ -92,54 +94,66 @@ const App: React.FC = () => (
 );
 */
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/tabs" render={() => (
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route exact path="/tabs/tab1"><Tab1 /></Route>
-              <Route exact path="/tabs/tab2"><Tab2 /></Route>
-              <Route exact path="/tabs/tab3"><Tab3 /></Route>
-              <Route exact path="/tabs/tab4"><Tab4 /></Route>
-            </IonRouterOutlet>
-            
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="tab1" href="/tabs/tab1">
-                <IonIcon icon={list} />
-                <IonLabel>Timeline</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="tab2" href="/tabs/tab2">
-                <IonIcon icon={wallet} />
-                <IonLabel>Wallet</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="tab4" href="/tabs/tab4">
-                <IonIcon icon={timerOutline} />
-                <IonLabel>Scheduled</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="tab3" href="/tabs/tab3">
-                <IonIcon icon={cog} />
-                <IonLabel>Settings</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-        )} />
+const App: React.FC = () => {
 
-        <Route exact path="/add">
-          <AddEntry />
-        </Route>
+  useEffect(() => {
+    const init = async () => {
+      await LocalNotificationService.checkAndRequestNotificationPermissions();
+    };
 
-        <Route exact path="/addSchedule">
-          <AddSchedule />
-        </Route>
+    init();
+  }, []);
 
-        <Route exact path="/">
-          <Redirect to="/tabs/tab1" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/tabs" render={() => (
+            <IonTabs>
+              <IonRouterOutlet>
+                <Route exact path="/tabs/tab1"><Tab1 /></Route>
+                <Route exact path="/tabs/tab2"><Tab2 /></Route>
+                <Route exact path="/tabs/tab3"><Tab3 /></Route>
+                <Route exact path="/tabs/tab4"><Tab4 /></Route>
+              </IonRouterOutlet>
+              
+              <IonTabBar slot="bottom">
+                <IonTabButton tab="tab1" href="/tabs/tab1">
+                  <IonIcon icon={list} />
+                  <IonLabel>Timeline</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab2" href="/tabs/tab2">
+                  <IonIcon icon={wallet} />
+                  <IonLabel>Wallet</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab4" href="/tabs/tab4">
+                  <IonIcon icon={timerOutline} />
+                  <IonLabel>Scheduled</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="tab3" href="/tabs/tab3">
+                  <IonIcon icon={cog} />
+                  <IonLabel>Settings</IonLabel>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
+          )} />
+
+          <Route exact path="/add">
+            <AddEntry />
+          </Route>
+
+          <Route exact path="/addSchedule">
+            <AddSchedule />
+          </Route>
+
+          <Route exact path="/">
+            <Redirect to="/tabs/tab1" />
+          </Route>
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;

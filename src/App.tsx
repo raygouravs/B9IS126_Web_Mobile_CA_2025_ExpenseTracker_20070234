@@ -177,6 +177,10 @@ const App: React.FC = () => {
     budgetProgressTracker();
   }, []);
 
+  useEffect(() => {
+    document.body.classList.remove('ion-palette-dark');
+  }, []);
+
   // update the latest notification batch dates
   const updateNotificationsBatch = async () => {
     const now = new Date();

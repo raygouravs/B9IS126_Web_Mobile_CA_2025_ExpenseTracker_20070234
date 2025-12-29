@@ -140,7 +140,7 @@ const Tab3: React.FC = () => {
               <div style={{ height: '15px' }} />
                 <IonItem lines="none" color="light" style={{ '--padding-start': '0px' }}>
                   <IonLabel color='dark' style={{ fontSize: '1.0rem', fontWeight: 'bold' }}>
-                    Budget Progress:
+                    Budget Progress :
                   </IonLabel>
                 </IonItem>
               <div style={{ height: '5px' }} />
@@ -161,10 +161,53 @@ const Tab3: React.FC = () => {
                 margin: '16px 0' 
               }} />
               <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='dark'><b>Cloud Backup :</b></IonLabel>
+              </div>
+              <div style={{ height: '5px' }} />
               <IonButton expand="block" onClick={cloudBackup} color='warning'>
                 <IonIcon slot='start' icon={cloudUpload} />
                 Sync to Cloud
               </IonButton>
+              <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='dark'>👆 Syncs in-app data to cloud!</IonLabel>
+              </div>
+              <div style={{ height: '5px' }} />
+              <div style={{ 
+                height: '1px', 
+                width: '100%', 
+                background: 'var(--ion-color-step-200, #e0e0e0)', 
+                margin: '16px 0' 
+              }} />
+              <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='dark'><b><u>📲 About App Developer :</u></b></IonLabel>
+              </div>
+              <div style={{ height: '10px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='dark'><b>Assessment Title:</b> B9IS126 CA 2025 </IonLabel>
+              </div>
+              <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='dark'><b>Module Code:</b> B9IS126</IonLabel>
+              </div>
+              <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='dark'><b>Module Title:</b> Web and Mobile Technologies</IonLabel>
+              </div>
+              <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='secondary'><b>Student Name:</b> Gourav Sankar Ray</IonLabel>
+              </div>
+              <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='secondary'><b>Student Number:</b> 20070234</IonLabel>
+              </div>
+              <div style={{ height: '5px' }} />
+              <div style={{ padding: '0 5px' }}>
+                  <IonLabel color='dark'><b>Institution:</b> Dublin Business School</IonLabel>
+              </div>
               <div style={{ height: '5px' }} />
               <div style={{ 
                 height: '1px', 

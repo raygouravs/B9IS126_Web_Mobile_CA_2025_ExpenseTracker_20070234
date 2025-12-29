@@ -71,7 +71,10 @@ export default function ScheduleListView(props: { schedules: RecurringSchedule[]
                               margin: 0,
                               lineHeight: 1.4
                             }}>
-                            🔔 Notifications start: {formatDateString(e.notificationDates[0].split('T')[0])}
+                            {/*🔔 Notification on: {formatDateString(e.notificationDates[0].split('T')[0])}*/}
+                            🔔 Next Notification: {e.notificationDates.filter((d) => {
+                                return new Date(d) > new Date() 
+                            }).sort()[0].split('T')[0]}
                           </p>
 
                           <IonButton

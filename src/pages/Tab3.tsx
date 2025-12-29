@@ -4,7 +4,8 @@
 import { IonContent, IonHeader, IonPage, 
          IonTitle, IonToolbar, IonItem,
          IonLabel, IonInput, IonButton, 
-         IonProgressBar, IonLoading } from '@ionic/react';
+         IonProgressBar, IonLoading, 
+         IonIcon} from '@ionic/react';
 import './Tab3.css';
 import { useEffect, useState } from 'react';
 import { MonthlyBudget, showToast } from '../utils/utilitymethods';
@@ -12,6 +13,8 @@ import ScheduledTransactionsService from '../services/ScheduledTransactionsServi
 import { VibrationService } from '../services/VibrationService';
 import { DiskStorageService } from '../services/DiskStorageService';
 import { useIonViewWillEnter } from '@ionic/react';
+import { cloudUpload } from 'ionicons/icons';
+import { FirebaseSyncService } from '../firebase/FirebaseSyncService';
 
 const Tab3: React.FC = () => {
   const [bamount, setBamount] = useState<number>(0);
@@ -66,6 +69,12 @@ const Tab3: React.FC = () => {
       setShowLoading(false);
       showToast('Budget updated successfully!', 'short');
     }
+  }
+
+  async function cloudBackup() {
+    setShowLoading(true);
+    await FirebaseSyncService.syncToFirebase();
+    setShowLoading(false);
   }
 
   async function budgetProgressTracker(){
@@ -144,12 +153,31 @@ const Tab3: React.FC = () => {
                   <IonLabel color='danger'>Budget limit reached!</IonLabel>
                 </div>
               )}
+              <div style={{ height: '5px' }} />
+              <div style={{ 
+                height: '1px', 
+                width: '100%', 
+                background: 'var(--ion-color-step-200, #e0e0e0)', 
+                margin: '16px 0' 
+              }} />
+              <div style={{ height: '5px' }} />
+              <IonButton expand="block" onClick={cloudBackup} color='warning'>
+                <IonIcon slot='start' icon={cloudUpload} />
+                Sync to Cloud
+              </IonButton>
+              <div style={{ height: '5px' }} />
+              <div style={{ 
+                height: '1px', 
+                width: '100%', 
+                background: 'var(--ion-color-step-200, #e0e0e0)', 
+                margin: '16px 0' 
+              }} />
       </IonContent>
       <IonLoading
-      isOpen={showLoading}
-      message={'Saving budget...'}
-      spinner="crescent"
-    />
+        isOpen={showLoading}
+        message={'Saving budget...'}
+        spinner="crescent"
+      />
     </IonPage>
   );
 };

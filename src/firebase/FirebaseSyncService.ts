@@ -1,7 +1,7 @@
 /*
     REFERENCE: Firebase (2025) Firebase Javascript API reference. Available at: https://firebase.google.com/docs/reference/js/storage.md?authuser=0#storage_package
 */
-import { ref, uploadString, getDownloadURL } from 'firebase/storage';
+import { ref, uploadString, getDownloadURL, getBytes } from 'firebase/storage';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { storage } from '../firebase/firebaseConfig';
 import DeviceIdentifierService from '../services/DeviceIdentifierService';
@@ -68,6 +68,7 @@ export class FirebaseSyncService {
     }
 
     for (const fileName of FILES) {
+
       try {
             // Check if local file already exists
             await Filesystem.readFile({
@@ -81,25 +82,19 @@ export class FirebaseSyncService {
       }
 
       try {
-        const fileRef = ref(
-          storage,
-          `devices/${deviceId}/${fileName}`
-        );
-
+        const fileRef = ref(storage, `devices/${deviceId}/${fileName}`);
+        
         const url = await getDownloadURL(fileRef);
-        const response = await fetch(url);
-        const json = await response.text();
 
-        await Filesystem.writeFile({
-          path: fileName,
-          data: json,
-          directory: Directory.Data,
-          encoding: Encoding.UTF8
+        await Filesystem.downloadFile({
+            url,
+            path: fileName,
+            directory: Directory.Data
         });
 
-      } catch (err) {
+        } catch (err) {
         console.warn(`Restore failed for ${fileName}`, err);
-      }
+        }
     }
   }
 }

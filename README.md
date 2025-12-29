@@ -90,7 +90,7 @@ In your VS Code terminal, run the following command to launch Android Studio:
 
 The application is built and tested to follow the latest Android architectural standards, ensuring a seamless experience on modern hardware:
 
-**Optimized for API 33+:** The project is fully compatible with Android 13 (Tiramisu), Android 14 (Upside Down Cake), and the latest Android 15 (Vanilla Ice Cream).
+**Optimized for API 33+:** The project is fully compatible with **Android 13 (Tiramisu)**, **Android 14 (Upside Down Cake)**, and the latest **Android 15 (Vanilla Ice Cream)**.
 
 
 ### How to Install

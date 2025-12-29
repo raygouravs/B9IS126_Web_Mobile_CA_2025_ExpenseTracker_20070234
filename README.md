@@ -103,6 +103,22 @@ The application is built and tested to follow the latest Android architectural s
 
 ---
 
+### Steps I followed to run the app directly in an Android Emulator from VS Code terminal:
+
+**Run the following commands from the project root:**
+
+**1. ionic cap run android**
+
+[ERROR] Error while getting Capacitor CLI version. Is Capacitor installed?
+
+**2. npm install @capacitor/core @capacitor/cli**
+
+**3. ionic cap run android**
+
+**The app is expected to launch in the Android emulator after completing the above steps.**
+
+---
+
 ## 📦 Project Structure
 
 * `src/components`: Reusable UI elements (Segment Control, Dynamic List Views).

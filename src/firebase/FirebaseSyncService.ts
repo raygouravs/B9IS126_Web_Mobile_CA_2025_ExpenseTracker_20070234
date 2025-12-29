@@ -50,7 +50,6 @@ export class FirebaseSyncService {
     }
   }
 
-
   //MARK: download from server only in case of fresh install
   static async restoreFromFirebase(): Promise<void> {
 

@@ -20,6 +20,12 @@ import { MonthlyBudget } from './utils/utilitymethods';
 import ScheduledTransactionsService from './services/ScheduledTransactionsService';
 import { DiskStorageService } from './services/DiskStorageService';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import AddSchedule from './pages/AddSchedule';
+import LocalNotificationService from './services/LocalNotificationService';
+import { useEffect } from 'react';
+import { RecurringSchedule } from './models/RecurringEntry';
+import { App as CapApp } from '@capacitor/app';
+import { FirebaseSyncService } from './firebase/FirebaseSyncService';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -50,10 +56,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import AddSchedule from './pages/AddSchedule';
-import LocalNotificationService from './services/LocalNotificationService';
-import { useEffect } from 'react';
-import { RecurringSchedule } from './models/RecurringEntry';
+
 
 setupIonicReact();
 
@@ -202,17 +205,23 @@ const App: React.FC = () => {
     //updateNotificationsBatch(); ///check later
   }, []);
 
-  async function syncDataWithCLoudStorage() {
-    const first_launch = await ScheduledTransactionsService.getFirstLaunchFlag();
-    if(first_launch){
-      await ScheduledTransactionsService.storeFirstLaunchFlag();
-    }
-    //MARK: complete this...
-  }
+  // sync with firebase...
+  const firebaseSyncOperations = async () => {
+    await FirebaseSyncService.restoreFromFirebase(); //check if file exists locally or restore from firebase, on app-launch
+    await FirebaseSyncService.syncToFirebase(); //upload backup to firebase, on app-launch [in case user never backgrounds app]
 
+    const pauseListener = await CapApp.addListener('pause', async () => {
+      await FirebaseSyncService.syncToFirebase(); //upload backup to firebase, on didEnterBackground
+    });
+
+    return () => pauseListener?.remove();
+  }
+  
+  // sync with firebase...
   useEffect(() => {
-    syncDataWithCLoudStorage();
-  }, [])
+    firebaseSyncOperations();
+  }, []);
+
 
 
   return (
